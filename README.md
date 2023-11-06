@@ -1,6 +1,11 @@
 This is a Time Log App.
 
-Stopped at: Full Stak Time log Project: Next.js 13 App Router, Supabase, Zustand, Tailwind, 2023
+Stopped at: Full Stak Time log Project: Next.js 13 App Router, Supabase, Zustand, Tailwind, 2023 - 34:35
+
+other projects to look at:
+Build and Deploy a Full Stack Notion Clone | NextJS 13, DALL•E, DrizzleORM, OpenAI, TypeScript
+Build a Course & LMS Platform: Next 13, React, Stripe, Mux, Prisma, Tailwind, MySQL | Udemy Clone
+Build and Deploy a Full Stack Next.js 13 Application | React, Next JS 13, TypeScript, Tailwind CSS
 
 ## Getting Started
 
