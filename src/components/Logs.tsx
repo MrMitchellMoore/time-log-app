@@ -1,3 +1,4 @@
+'use client';
 import {
   Table,
   TableBody,
@@ -7,13 +8,18 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { cn } from '@/lib/utils';
 import { useLogStore } from '@/store';
 
 export default function Logs() {
-  //const logs = useLogStore((state) => state.logs);
+  const logs = useLogStore((state) => state.logs);
+
   return (
-    <Table>
-      <TableCaption>A list of your recent logs.</TableCaption>
+    <Table className='h-full'>
+      <TableCaption>
+        {Object.keys(logs).length === 0 ? '' : 'A list of your recent logs.'}
+      </TableCaption>
+
       <TableHeader>
         <TableRow className='tracking-widest'>
           <TableHead className='w-1/3 text-slate-500'>Date</TableHead>
@@ -22,13 +28,26 @@ export default function Logs() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className='font-medium'>
-            {new Date().toDateString()}
-          </TableCell>
-          <TableCell>10</TableCell>
-          <TableCell>This is a placeholder</TableCell>
-        </TableRow>
+        {Object.keys(logs).map((key) => {
+          const log = logs[key];
+          return (
+            <TableRow
+              key={key}
+              className={cn('font-bold text-black', {
+                'bg-yellow-200': log.hour <= 5,
+                'bg-green-400': log.hour > 5,
+                'bg-orange-500': log.hour >= 10,
+                'bg-red-600': log.hour >= 16,
+              })}
+            >
+              <TableCell className='font-extrabold'>
+                {log.date.toDateString()}
+              </TableCell>
+              <TableCell>{log.hour}</TableCell>
+              <TableCell>{log.note}</TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );
