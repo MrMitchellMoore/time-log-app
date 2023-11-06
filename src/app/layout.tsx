@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
         <main className='mx-auto min-h-screen max-w-7xl text-slate-100'>
           <Navbar />
           {children}
+          <Toaster />
         </main>
       </body>
     </html>

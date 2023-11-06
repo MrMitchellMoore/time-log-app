@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+'use client';
 
 import {
   HoverCard,
@@ -6,8 +6,12 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { cn } from '@/lib/utils';
+import { useLogStore } from '@/store';
+import dayjs from 'dayjs';
 
 export default function Calendar() {
+  const logs = useLogStore((state) => state.logs);
+
   function getDateInMonth(year = dayjs().year(), month = dayjs().month()) {
     const startDate = dayjs().year(year).month(month).date(1);
     const endDate = startDate.endOf('month');
@@ -33,8 +37,6 @@ export default function Calendar() {
     }
   };
 
-  const hour = 0;
-
   return (
     <div>
       <h1 className='my-2 text-center text-3xl text-yellow-400 md:text-5xl'>
@@ -42,18 +44,19 @@ export default function Calendar() {
       </h1>
       <div className='flex flex-wrap justify-center gap-2 rounded-md border border-dashed p-10 hover:border-blue-500'>
         {getDateInMonth().map((value, index) => {
+          const log = logs[value];
           return (
             <HoverCard key={index}>
               <HoverCardTrigger>
                 <div
                   className={cn(
                     'h-5 w-5 cursor-pointer rounded-sm',
-                    getColor(hour || 0)
+                    getColor(log?.hour || 0)
                   )}
                 ></div>
               </HoverCardTrigger>
               <HoverCardContent>
-                {hour || 0} hours on {value}
+                {log?.hour || 0} hours on {value}
               </HoverCardContent>
             </HoverCard>
           );

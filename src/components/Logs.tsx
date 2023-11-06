@@ -7,8 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useLogStore } from '@/store';
 
 export default function Logs() {
+  //const logs = useLogStore((state) => state.logs);
   return (
     <Table>
       <TableCaption>A list of your recent logs.</TableCaption>
