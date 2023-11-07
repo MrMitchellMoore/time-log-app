@@ -13,16 +13,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AddBtn } from './icons/addition';
 import { DatePicker } from './DatePicker';
-import { useLogStore } from '@/store';
+import { ILog, useLogStore } from '@/store';
 import { useToast } from '@/components/ui/use-toast';
 import dayjs from 'dayjs';
+
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export function NewLog() {
   const { toast } = useToast();
   const log = useLogStore((state) => state.log);
   const setLog = useLogStore((state) => state.setLog);
   const setLogs = useLogStore((state) => state.setLogs);
-  const logs = useLogStore((state) => state.setLogs);
+  // const logs = useLogStore((state) => state.setLogs);
 
   const closeDialog = () => {
     document.getElementById('close-btn')?.click();
@@ -36,16 +40,27 @@ export function NewLog() {
     }
   };
 
-  const submitLog = () => {
+  const submitLog = async () => {
     try {
       validateLog();
+
+      const alllogs = await prisma.logs.create({
+        data: {
+          date: dayjs(log.date).format('YYYY-MM-DD'),
+          hour: log.hour,
+          note: log.note,
+        },
+      });
+
       setLogs(log, dayjs(log.date).format('YYYY-MM-DD'));
       toast({
         title: 'Successfully created log',
-        description: `${log.hour} in ${log.date.toDateString()}`,
+        description: `${log.hour} in ${log.date.toString()}`,
         style: { color: 'green' },
       });
+
       closeDialog();
+      return alllogs;
     } catch (error) {
       toast({
         title: 'Failed to create log',

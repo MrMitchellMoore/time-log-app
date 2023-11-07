@@ -17,6 +17,18 @@ npm run dev
 
 ```
 
+## Seed DB
+
+Make ts-node, typescript, @types/node is installed.
+Create a file with sample data in it that is related to your model.
+Create seed file and import sample data in seed file. Save as .ts if using typescript if not .js
+Go to packson.json and paste the following before scripts:
+"prisma": {
+"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+}
+
+Then go to command line and run npx prisma db seed
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
